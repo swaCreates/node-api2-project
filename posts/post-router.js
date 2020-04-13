@@ -3,21 +3,21 @@ const db= require('../data/db.js');
 
 const router= express.Router();
 
-// GET /users
+// GET /posts
 router.get('/', (req, res) => {
     db.find()
     .then(posts => {
         res.json(posts);
     })
     .catch(err => {
-        console.log('Error by post:', err);
+        console.log('Error with posts:', err);
         res.status(500).json({
             error: 'The posts information could not be retrieved.'
         }).end();
     })
 })
 
-// GET /users/:id
+// GET /posts/:id
 router.get('/:id', (req, res) => {
     const {id}= req.params;
 
@@ -28,23 +28,44 @@ router.get('/:id', (req, res) => {
        
         if(post.length === 0){
             res.status(404).json({
-                message: 'The post with the specified ID does not exist.'
+                error_message: 'The post with the specified ID does not exist.'
             })
         } else{
             res.json(post);
         }
     })
     .catch(err => {
-        console.log('Error by post-id:', err);
+        console.log('Error with post-id:', err);
         res.status(500).json({
             error: 'The post information could not be retrieved.'
         }).end();
     });
 })
 
-// POST /users
+// POST /posts
 router.post('/', (req, res) => {
+    // make sure both the title & contents are in the post request
 
+    if(!req.body.title || !req.body.contents){
+        res.status(400).json({
+            error_message: 'Please provide title and contents for the post.'
+        }).end();
+    }
+
+    db.insert(req.body)
+    .then(post => {
+        res.status(201).json(post);
+    })
+    .catch(err => {
+        console.log('Error posting to database:', err);
+        res.status(500).json({
+            error: 'There was an error while saving the post to the database.'
+        }).end();
+    })
+})
+
+router.put('/:id', (req, res) => {
+    
 })
 
 module.exports= router;
