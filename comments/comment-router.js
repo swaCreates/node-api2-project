@@ -3,7 +3,7 @@ const db= require('../data/db.js');
 
 const router= express.Router();
 
-// GET posts/:id/comments
+// GET api/posts/:id/comments
 router.get('/:id/comments', (req, res) => {
     const {id}= req.params;
 
@@ -25,6 +25,7 @@ router.get('/:id/comments', (req, res) => {
     });
 });
 
+// POST api/posts/:id/comments
 router.post('/:id/comments', (req, res) => {
     const {id}= req.params;
 
@@ -34,7 +35,11 @@ router.post('/:id/comments', (req, res) => {
         });
     };
 
-    const newComment= {...req.body, post_id: id};
+    const newComment= {
+        ...req.body, 
+        post_id: id,
+        text: req.body.text
+    };
 
     // 404 message is not working
 

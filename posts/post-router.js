@@ -3,7 +3,7 @@ const db= require('../data/db.js');
 
 const router= express.Router();
 
-// GET /posts
+// GET /api/posts
 router.get('/', (req, res) => {
     db.find()
     .then(posts => {
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     })
 })
 
-// GET /posts/:id
+// GET /api/posts/:id
 router.get('/:id', (req, res) => {
     const {id}= req.params;
 
@@ -42,7 +42,7 @@ router.get('/:id', (req, res) => {
     });
 })
 
-// POST /posts
+// POST /api/posts
 router.post('/', (req, res) => {
     // make sure both the title & contents are in the post request
 
@@ -64,7 +64,7 @@ router.post('/', (req, res) => {
     })
 })
 
-// PUT /posts/:id
+// PUT /api/posts/:id
 router.put('/:id', (req, res) => {
     const {id}= req.params;
 
@@ -94,7 +94,7 @@ router.put('/:id', (req, res) => {
     })
 })
 
-// DELETE /users/:id
+// DELETE api/posts/:id
 router.delete('/:id', (req, res) => {
     const {id}= req.params;
 
