@@ -35,6 +35,8 @@ router.post('/:id/comments', (req, res) => {
         });
     };
 
+    // id is required inside of the object so it can correspond to the post
+    // also we want to make a copy of the object, and not change the original
     const newComment= {
         ...req.body, 
         post_id: id,
